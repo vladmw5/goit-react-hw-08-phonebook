@@ -1,15 +1,18 @@
 import { useState } from 'react';
+import { useDispatch } from 'react-redux';
+import authOperations from 'redux/auth/auth-operations';
 
 import s from './LogInForm.module.css';
 
 const LogInForm = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const dispatch = useDispatch();
 
   const handleSubmit = event => {
     event.preventDefault();
     const credentials = { email, password };
-    console.log(credentials);
+    dispatch(authOperations.login(credentials));
     reset();
   };
 
@@ -41,6 +44,7 @@ const LogInForm = () => {
             value={email}
             onChange={handleEmailChange}
             className={s.input}
+            required
           />
         </li>
         <li className={s.item}>
@@ -54,6 +58,7 @@ const LogInForm = () => {
             value={password}
             onChange={handlePasswordChange}
             className={s.input}
+            required
           />
         </li>
       </ul>

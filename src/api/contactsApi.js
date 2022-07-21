@@ -34,7 +34,7 @@ export const getAllContactsQuery = async () =>
   await axios.get(contactsEndpoint);
 
 export const postContactQuery = async contact =>
-  await axios.post(contactsEndpoint);
+  await axios.post(contactsEndpoint, contact);
 
 export const deleteContactQuery = async id =>
   await axios.delete(`${contactsEndpoint}/${id}`);

@@ -1,4 +1,7 @@
 import { useState } from 'react';
+import { useDispatch } from 'react-redux';
+import { toast } from 'react-toastify';
+import authOperations from 'redux/auth/auth-operations';
 
 import s from './SignUpForm.module.css';
 
@@ -6,11 +9,16 @@ const SignUpForm = () => {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const dispatch = useDispatch();
 
   const handleSubmit = event => {
     event.preventDefault();
+    if (password.length < 7) {
+      toast.error('Password must be 7 characters at least');
+      return;
+    }
     const credentials = { name, email, password };
-    console.log(credentials);
+    dispatch(authOperations.signup(credentials));
     reset();
   };
 
@@ -47,6 +55,7 @@ const SignUpForm = () => {
             value={name}
             onChange={handleNameChange}
             className={s.input}
+            required
           />
         </li>
         <li className={s.item}>
@@ -60,6 +69,7 @@ const SignUpForm = () => {
             value={email}
             onChange={handleEmailChange}
             className={s.input}
+            required
           />
         </li>
         <li className={s.item}>
@@ -73,6 +83,7 @@ const SignUpForm = () => {
             value={password}
             onChange={handlePasswordChange}
             className={s.input}
+            required
           />
         </li>
       </ul>
